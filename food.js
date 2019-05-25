@@ -2,25 +2,37 @@
 console.log("Hello Foodie!");
 var orange = ["fruit", "orange", ".33", "Florida", "orange"];
 var apple = ["fruit", "apple", ".50", "Kansas", "Red", "organic"];
-var newFruitArray = [];
+var allFood = {};
 
-function makeNewFruitArray() {
-  console.log("makeNewFruitArray called");
-  newFruitArray.push(document.getElementById("categoryInput").value);
-  newFruitArray.push(document.getElementById("typeInput").value);
-  newFruitArray.push(document.getElementById("priceInput").value);
-  newFruitArray.push(document.getElementById("locationInput").value);
-  newFruitArray.push(document.getElementById("colorInput").value);
-  newFruitArray.push(document.getElementById("growingMethodInput").value);
-  newFruitArray.push(document.getElementById("distanceInput").value);
-  console.log(newFruitArray);
-}
+//Ex 1
+// var allFood = [];
+// allFood.push({
+//   category: "",
+//   type: ""
+// });
+// allFood = [{}, {}];
+// allFood.forEach(function(obj) {
+//   if (obj.type === "banana") {
+//   }
+// });
+
+// Ex 2
+// var allFood = {};
+// var newFruit = {
+//   category: "",
+//   type: ""
+// };
+// newFruit.color = "red";
+//
+// allFood[newFruit.type] = newFruit;
+//
+// allFood.banana;
 
 class Food {
-  constructor(category, type, price) {
-    this.category = category;
-    this.type = type;
-    this.price = price;
+  constructor(props) {
+    this.category = props.category;
+    this.type = props.type;
+    this.price = props.price;
   }
   displayCategory() {
     console.log("This " + this.type + " is a " + this.category);
@@ -28,10 +40,10 @@ class Food {
 }
 
 class Fruit extends Food {
-  constructor(category, type, price, color, location) {
-    super(category, type, price);
-    this.color = color;
-    this.location = location;
+  constructor(props) {
+    super(props);
+    this.color = props.color;
+    this.location = props.location;
   }
   displayFruit() {
     console.log("This is a fruit");
@@ -39,9 +51,9 @@ class Fruit extends Food {
 }
 
 class Local extends Fruit {
-  constructor(category, type, price, color, location, growingMethod) {
-    super(category, type, price, color, location);
-    this.growingMethod = growingMethod;
+  constructor(props) {
+    super(props);
+    this.growingMethod = props.growingMethod;
   }
   displayLocal() {
     console.log("This food is local, from " + this.location);
@@ -52,24 +64,51 @@ class Local extends Fruit {
 }
 
 class NotLocal extends Fruit {
-  constructor(category, type, price, color, location, growingMethod, distance) {
-    super(category, type, price, color, location);
-    this.distance = distance;
+  constructor(props) {
+    super(props);
+    this.distance = props.distance;
   }
   displayDistance() {
     console.log("This food traveled " + this.distance + " many miles.");
   }
 }
 
-function sortLocal() {
-  console.log("sortLocal called");
-  if (apple.includes("Kansas")) {
-    console.log("Kansas");
-    let apple = new Local("fruit", "apple", ".50", "Kansas", "Red", "organic");
-    apple.displayCategory();
-    apple.displayFruit();
-    apple.displayGrowingType();
+function makeNewFruitArray() {
+  console.log("makeNewFruitArray called");
+  var formData = {};
+  //document.getElementsByClassName("inputs").forEach(function(input) {
+  for (var i = 0; i < document.getElementsByClassName("inputs").length; i++) {
+    var input = document.getElementsByClassName("inputs").item(i);
+    console.log(formData);
+    console.log(input);
+    var key = input.id;
+    var value = input.value;
+    formData[key] = value;
   }
+  // allFood[formData.type] = formData;
+  let newFruit = new Fruit(formData);
+  allFood[newFruit.type] = newFruit;
+  console.log(newFruit);
 }
 
-sortLocal();
+// function sortLocal() {
+//   console.log("sortLocal called");
+//   if (newFruitArray.includes("Kansas")) {
+//     console.log("Kansas");
+//     //let apple = new Local("fruit", "apple", ".50", "Kansas", "Red", "organic");
+//     var category = newFruitArray[0];
+//     var type = newFruitArray[1];
+//     var price = newFruitArray[2];
+//     var location = newFruitArray[3];
+//     var color = newFruitArray[4];
+//     var growingMethod = newFruitArray[5];
+//
+//     console.log("catogory is " + category);
+//     //  apple.displayCategory();
+//     //  apple.displayFruit();
+//     //  apple.displayGrowingType();
+//     //note, it would actually be allFood.banana.displayCategory();
+//   }
+// }
+//
+// sortLocal();
